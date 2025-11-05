@@ -1,9 +1,8 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 
 const Users = ({ usersPromise }) => {
-  const users = use(usersPromise);
-  console.log(users);
-
+  const initialUsers = use(usersPromise);
+    const [users, setUsers] = useState(initialUsers)
   const handleAddUser = (e) =>{
     e.preventDefault()
     const name = e.target.name.value;
@@ -23,6 +22,9 @@ const Users = ({ usersPromise }) => {
     .then(res => res.json())
     .then(data =>{
         console.log('After Post',data)
+        const newUsers = [...users, data];
+        setUsers(newUsers);
+        e.target.reset();
     })
   }
 
